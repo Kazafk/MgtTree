@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MgtTree — Généalogie du management</title>
+  <meta name="description" content="Arbre généalogique interactif des écoles de pensée en management, et leur répartition dans le monde." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="page-header">
+    <a class="back-link" href="https://kazafk.github.io/">&larr; Portfolio</a>
+    <h1>MgtTree — Généalogie du management</h1>
+    <nav class="view-tabs" role="tablist">
+      <button id="tab-tree" class="view-tab view-tab--active" role="tab" aria-selected="true">Arbre</button>
+      <button id="tab-map" class="view-tab" role="tab" aria-selected="false">Carte</button>
+    </nav>
+  </header>
+
+  <div class="filters" id="filters">
+    <label>Catégorie
+      <select id="filter-categorie"><option value="">Toutes</option></select>
+    </label>
+    <label>Région
+      <select id="filter-region"><option value="">Toutes</option></select>
+    </label>
+  </div>
+
+  <main class="view-container">
+    <section id="tree-view" class="view view--tree"></section>
+    <section id="map-view" class="view view--map" hidden></section>
+  </main>
+
+  <aside id="detail-panel" class="panel" aria-live="polite"></aside>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

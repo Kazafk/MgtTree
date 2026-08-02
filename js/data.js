@@ -15,6 +15,7 @@ export function validateData(raw) {
     ids.add(e.id);
     if (!e.nom) errors.push(`${e.id}: nom manquant`);
     if (!e.periode || typeof e.periode.debut !== 'number') errors.push(`${e.id}: periode.debut manquant ou invalide`);
+    if (e.periode && e.periode.fin !== null && e.periode.fin !== undefined && typeof e.periode.fin !== 'number') errors.push(`${e.id}: periode.fin doit être un nombre ou null`);
     if (!e.region) errors.push(`${e.id}: region manquante`);
     if (!e.coords || typeof e.coords.lat !== 'number' || typeof e.coords.lon !== 'number') errors.push(`${e.id}: coords invalides`);
     if (!Array.isArray(e.auteurs) || e.auteurs.length === 0) errors.push(`${e.id}: auteurs manquants`);

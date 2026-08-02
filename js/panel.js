@@ -15,7 +15,7 @@ export function renderPanel(container, ecole, { onNavigate, filiationsFrom }) {
   container.innerHTML = `
     <button class="panel-close" aria-label="Fermer">&times;</button>
     <h2 class="panel-title">${escapeHTML(ecole.nom)}</h2>
-    <p class="panel-meta">${escapeHTML(ecole.region)} · ${ecole.periode.debut}${ecole.periode.fin ? '–' + ecole.periode.fin : ''}</p>
+    <p class="panel-meta">${escapeHTML(ecole.region)} · ${escapeHTML(ecole.periode.debut)}${ecole.periode.fin ? '–' + escapeHTML(ecole.periode.fin) : ''}</p>
     <h3>Auteurs</h3>
     <p>${ecole.auteurs.map(escapeHTML).join(', ')}</p>
     <h3>Logique</h3>

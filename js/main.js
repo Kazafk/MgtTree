@@ -18,6 +18,36 @@ async function init() {
 
   const state = { view: 'tree' };
 
+  const filterCategorie = document.getElementById('filter-categorie');
+  const filterRegion = document.getElementById('filter-region');
+
+  const categories = [...new Set(raw.ecoles.map(e => e.categorie))].sort();
+  const regions = [...new Set(raw.ecoles.map(e => e.region))].sort();
+
+  for (const c of categories) {
+    const opt = document.createElement('option');
+    opt.value = c;
+    opt.textContent = c;
+    filterCategorie.appendChild(opt);
+  }
+  for (const r of regions) {
+    const opt = document.createElement('option');
+    opt.value = r;
+    opt.textContent = r;
+    filterRegion.appendChild(opt);
+  }
+
+  state.filters = { categorie: '', region: '' };
+
+  filterCategorie.addEventListener('change', () => {
+    state.filters.categorie = filterCategorie.value;
+    renderActiveView();
+  });
+  filterRegion.addEventListener('change', () => {
+    state.filters.region = filterRegion.value;
+    renderActiveView();
+  });
+
   function filiationsFrom(id) {
     return raw.filiations
       .filter(f => f.de === id || f.vers === id)
@@ -39,7 +69,7 @@ async function init() {
       tabMap.classList.remove('view-tab--active');
       tabTree.setAttribute('aria-selected', 'true');
       tabMap.setAttribute('aria-selected', 'false');
-      renderTree(treeContainer, { roots, crossLinks, index, filiations: raw.filiations, onSelect: select });
+      renderTree(treeContainer, { roots, crossLinks, index, filiations: raw.filiations, onSelect: select, filters: state.filters });
     } else {
       treeContainer.hidden = true;
       mapContainer.hidden = false;

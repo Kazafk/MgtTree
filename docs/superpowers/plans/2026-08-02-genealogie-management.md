@@ -422,7 +422,7 @@ export function generateVignette(id, categorie, size = 64) {
     leaves += `<path d="M ${cx} ${y} Q ${x1} ${y - leafLen * 0.3} ${x2} ${y}" fill="none" stroke="currentColor" stroke-width="1" />`;
   }
 
-  return `<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" class="vignette vignette--${categorie}" data-id="${id}">` +
+  return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg" class="vignette vignette--${categorie}" data-id="${id}">` +
     `<path d="${stemPath}" fill="none" stroke="currentColor" stroke-width="1.5" />` +
     leaves +
     `</svg>`;

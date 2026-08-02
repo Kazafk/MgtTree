@@ -1,2 +1,125 @@
+:root {
+  --paper: #F3ECDD;
+  --paper-deep: #E8DCC4;
+  --ink-sepia: #5B3A29;
+  --ink-sepia-soft: #7A5540;
+  --moss: #3F5C3F;
+  --moss-soft: #6E8F6E;
+  --rupture: #8E3B1C;
+}
+
 * { box-sizing: border-box; }
-body { margin: 0; font-family: Georgia, serif; }
+
+body {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  background: var(--paper);
+  color: var(--ink-sepia);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(91, 58, 41, 0.03), transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(91, 58, 41, 0.03), transparent 60%);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--ink-sepia-soft);
+}
+
+.back-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--ink-sepia);
+  text-decoration: none;
+}
+
+.view-tabs { margin-left: auto; display: flex; gap: 0.5rem; }
+
+.view-tab {
+  font-family: 'JetBrains Mono', monospace;
+  background: transparent;
+  border: 1px solid var(--ink-sepia-soft);
+  color: var(--ink-sepia);
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.view-tab--active { background: var(--ink-sepia); color: var(--paper); }
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 2rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+}
+
+.filters select {
+  font-family: inherit;
+  background: var(--paper-deep);
+  border: 1px solid var(--ink-sepia-soft);
+  color: var(--ink-sepia);
+  padding: 0.2rem 0.4rem;
+}
+
+.view-container { position: relative; height: calc(100vh - 120px); }
+
+.view { width: 100%; height: 100%; }
+
+.tree-svg, .map-svg { width: 100%; height: 100%; }
+
+.tree-link { fill: none; stroke: var(--ink-sepia-soft); stroke-width: 1.5; }
+.tree-link[data-type="rupture"] { stroke: var(--rupture); stroke-dasharray: 4 3; }
+.cross-link { fill: none; stroke: var(--moss-soft); stroke-width: 1; stroke-dasharray: 2 3; }
+
+.tree-node { color: var(--ink-sepia); }
+.tree-node-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--ink-sepia); }
+.tree-node--dimmed { opacity: 0.25; }
+
+.map-country { fill: var(--paper-deep); stroke: var(--ink-sepia-soft); stroke-width: 0.5; }
+.map-sphere { fill: #EDE3CB; }
+.map-marker { color: var(--moss); }
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(380px, 90vw);
+  height: 100vh;
+  background: var(--paper-deep);
+  border-left: 1px solid var(--ink-sepia-soft);
+  padding: 2rem 1.5rem;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.panel--open { transform: translateX(0); }
+.panel-title { font-size: 1.4rem; margin: 0 0 0.25rem; }
+.panel-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--ink-sepia-soft); }
+.panel-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--ink-sepia);
+}
+.panel-link {
+  background: none;
+  border: none;
+  color: var(--moss);
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel { transition: none; }
+}

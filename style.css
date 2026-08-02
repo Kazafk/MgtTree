@@ -67,9 +67,14 @@ body {
 
 .view-container { position: relative; height: calc(100vh - 120px); }
 
-.view { width: 100%; height: 100%; }
+.view { width: 100%; height: 100%; overflow: auto; }
 
-.tree-svg, .map-svg { width: 100%; height: 100%; }
+/* .tree-svg garde ses dimensions intrinsèques (fixées en JS selon le nombre
+   de nœuds et la profondeur) plutôt que 100 % : un arbre dense doit pouvoir
+   dépasser le viewport et défiler, sans être écrasé/redimensionné pour y
+   tenir. */
+.tree-svg { display: block; width: auto; height: auto; }
+.map-svg { width: 100%; height: 100%; }
 
 .tree-link { fill: none; stroke: var(--ink-sepia-soft); stroke-width: 1.5; }
 .tree-link[data-type="rupture"] { stroke: var(--rupture); stroke-dasharray: 4 3; }

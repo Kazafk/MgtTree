@@ -263,7 +263,7 @@
       "coords": { "lat": 42.3770, "lon": -71.1167 },
       "logique": "Porter analyse la compétitivité des entreprises à travers le modèle des cinq forces concurrentielles et propose que l'avantage concurrentiel durable repose sur deux stratégies génériques : la domination par les coûts ou la différenciation, soutenues par une chaîne de valeur optimisée. Cette approche ancre la stratégie dans l'analyse structurelle du secteur d'activité.",
       "citation_cle": "« La stratégie concurrentielle consiste à être différent : choisir délibérément un ensemble d'activités différentes pour offrir une combinaison unique de valeur. » (Michael Porter)",
-      "sources": ["Porter, M. E. (1985). Competitive Advantage: Creating and Sustaining Superior Performance. Free Press."]
+      "sources": ["Porter, M. E. (1985). Competitive Advantage: Creating and Sustaining Superior Performance. Free Press.", "Porter, M. E. (1996). What Is Strategy? Harvard Business Review, 74(6)."]
     },
     {
       "id": "strategie-emergente-mintzberg",

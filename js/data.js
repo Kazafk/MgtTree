@@ -67,12 +67,7 @@ export function buildStructuralTree(ecoles, filiations) {
     childrenOf.get(parent).push(child);
   }
 
-  const allIncoming = new Set();
-  for (const f of filiations) {
-    allIncoming.add(f.vers);
-  }
-
-  const roots = ecoles.filter(e => !allIncoming.has(e.id)).map(e => e.id);
+  const roots = ecoles.filter(e => !parentOf.has(e.id)).map(e => e.id);
 
   function toNode(id) {
     return { id, children: childrenOf.get(id).map(toNode) };

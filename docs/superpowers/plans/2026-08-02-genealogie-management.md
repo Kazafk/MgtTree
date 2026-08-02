@@ -197,10 +197,11 @@ assertEqual(idx.get('b').nom, 'École B', 'buildIndex doit indexer par id');
 
 // buildStructuralTree
 const { roots, crossLinks } = buildStructuralTree(minimalDataset().ecoles, minimalDataset().filiations);
-assertEqual(roots.length, 1, 'un seul nœud sans parent structurant → une seule racine');
-assertEqual(roots[0].id, 'a', 'la racine doit être "a"');
-assertEqual(roots[0].children.map(c => c.id), ['b'], '"b" doit être enfant structurant de "a"');
-assertEqual(crossLinks, [{ de: 'a', vers: 'c' }], 'la filiation synthese doit devenir un cross-link, pas un enfant');
+assertEqual(roots.length, 2, '"a" et "c" sont racines : "c" n\'a qu\'une filiation synthese, pas de parent structurant');
+assertEqual(roots.map(r => r.id), ['a', 'c'], 'les racines doivent être "a" et "c"');
+assertEqual(roots.find(r => r.id === 'a').children.map(c => c.id), ['b'], '"b" doit être enfant structurant de "a"');
+assertEqual(roots.find(r => r.id === 'c').children, [], '"c" est racine (pas de parent structurant) et n\'a pas d\'enfant structurant');
+assertEqual(crossLinks, [{ de: 'a', vers: 'c' }], 'la filiation synthese doit devenir un cross-link vers "c", même si "c" est aussi racine');
 
 const twoParents = minimalDataset();
 twoParents.filiations.push({ de: 'c', vers: 'b', type: 'rupture' });

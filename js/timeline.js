@@ -11,6 +11,7 @@ const MARGIN_RIGHT = 60;
 const MARGIN_TOP = 50;
 const MARKER_SIZE = 24;
 const MAX_LABEL_WIDTH = 180;
+const MAX_BAND_LABEL_WIDTH = MARGIN_LEFT - 20;
 
 export function renderTimeline(container, { roots, index, filiations, onSelect, filters }) {
   container.innerHTML = '';
@@ -70,12 +71,35 @@ export function renderTimeline(container, { roots, index, filiations, onSelect, 
       .attr('y', band.top)
       .attr('width', totalWidth)
       .attr('height', band.height);
-    bandGroup.append('text')
+    const bandLabel = bandGroup.append('text')
       .attr('class', 'timeline-band-label')
       .attr('x', 10)
-      .attr('y', band.top + band.height / 2)
+      // Ancré près du haut de la bande plutôt qu'à mi-hauteur : un ancrage
+      // centré tombe pile sur une rangée de nœud dès que la bande a un
+      // nombre pair de rangées, avec un risque de collision si une école
+      // ancienne finissait sur cette rangée précise.
+      .attr('y', band.top + 18)
       .attr('dominant-baseline', 'middle')
       .text(rootEcole.nom);
+
+    // Même garde-fou que les libellés de nœud : la gouttière de gauche
+    // (MARGIN_LEFT) n'est pas extensible, donc un nom de racine trop long
+    // (ex. « Administration industrielle et générale ») doit être tronqué
+    // plutôt que déborder sur le tracé.
+    let bandBbox = bandLabel.node().getBBox();
+    if (bandBbox.width > MAX_BAND_LABEL_WIDTH) {
+      let name = rootEcole.nom;
+      const estimate = Math.max(1, Math.floor(name.length * (MAX_BAND_LABEL_WIDTH / bandBbox.width)) - 1);
+      name = name.slice(0, estimate);
+      bandLabel.text(name + '…');
+      bandBbox = bandLabel.node().getBBox();
+      while (bandBbox.width > MAX_BAND_LABEL_WIDTH && name.length > 1) {
+        name = name.slice(0, -1);
+        bandLabel.text(name + '…');
+        bandBbox = bandLabel.node().getBBox();
+      }
+      bandLabel.append('title').text(rootEcole.nom);
+    }
   }
 
   // Position de chaque école : x = date réelle, y = rangée fixe dans sa bande.
@@ -109,8 +133,12 @@ export function renderTimeline(container, { roots, index, filiations, onSelect, 
     .attr('class', 'cross-link')
     .attr('d', f => linkGen({ source: positions.get(f.de), target: positions.get(f.vers) }));
 
-  // Nœuds + libellés : même technique de centrage/alternance/troncature que
-  // l'Arbre (v1.1, commits 1f18abe/65fa084), reprise ici à l'identique.
+  // Nœuds + libellés : même centrage et troncature que l'Arbre (v1.1,
+  // commits 1f18abe/65fa084). L'alternance est plus simple ici (`i % 2`
+  // plutôt que `(depth + siblingIndex) % 2`) car chaque bande est une liste
+  // à plat (une école par rangée) sans second axe frère/profondeur à
+  // désenchevêtrer — deux rangées consécutives sont toujours de côtés
+  // opposés, avec la même marge verticale (~4.8px) que dans l'Arbre.
   const nodeGroup = g.append('g');
   for (const band of bandLayouts) {
     band.ids.forEach((id, i) => {

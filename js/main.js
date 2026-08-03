@@ -2,6 +2,7 @@
 import { validateData, buildIndex, buildStructuralTree } from './data.js';
 import { renderTree } from './tree.js';
 import { renderMap } from './map.js';
+import { renderTimeline } from './timeline.js';
 import { renderPanel } from './panel.js';
 import { renderLegend } from './legend.js';
 import { categoryLabel } from './vignette.js';
@@ -14,9 +15,11 @@ async function init() {
 
   const treeContainer = document.getElementById('tree-view');
   const mapContainer = document.getElementById('map-view');
+  const timelineContainer = document.getElementById('timeline-view');
   const panelContainer = document.getElementById('detail-panel');
   const tabTree = document.getElementById('tab-tree');
   const tabMap = document.getElementById('tab-map');
+  const tabChronologie = document.getElementById('tab-chronologie');
 
   renderLegend(document.getElementById('legend'));
 
@@ -65,28 +68,32 @@ async function init() {
     renderPanel(panelContainer, ecole, { onNavigate: select, filiationsFrom });
   }
 
+  const tabs = {
+    tree: { button: tabTree, container: treeContainer },
+    map: { button: tabMap, container: mapContainer },
+    chronologie: { button: tabChronologie, container: timelineContainer }
+  };
+
   function renderActiveView() {
+    for (const [key, { button, container }] of Object.entries(tabs)) {
+      const active = state.view === key;
+      container.hidden = !active;
+      button.classList.toggle('view-tab--active', active);
+      button.setAttribute('aria-selected', active ? 'true' : 'false');
+    }
+
     if (state.view === 'tree') {
-      treeContainer.hidden = false;
-      mapContainer.hidden = true;
-      tabTree.classList.add('view-tab--active');
-      tabMap.classList.remove('view-tab--active');
-      tabTree.setAttribute('aria-selected', 'true');
-      tabMap.setAttribute('aria-selected', 'false');
       renderTree(treeContainer, { roots, crossLinks, index, filiations: raw.filiations, onSelect: select, filters: state.filters });
-    } else {
-      treeContainer.hidden = true;
-      mapContainer.hidden = false;
-      tabMap.classList.add('view-tab--active');
-      tabTree.classList.remove('view-tab--active');
-      tabMap.setAttribute('aria-selected', 'true');
-      tabTree.setAttribute('aria-selected', 'false');
+    } else if (state.view === 'map') {
       renderMap(mapContainer, { ecoles: raw.ecoles, onSelect: select });
+    } else {
+      renderTimeline(timelineContainer, { roots, index, filiations: raw.filiations, onSelect: select, filters: state.filters });
     }
   }
 
   tabTree.addEventListener('click', () => { state.view = 'tree'; renderActiveView(); });
   tabMap.addEventListener('click', () => { state.view = 'map'; renderActiveView(); });
+  tabChronologie.addEventListener('click', () => { state.view = 'chronologie'; renderActiveView(); });
 
   renderActiveView();
 }

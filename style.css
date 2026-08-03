@@ -94,6 +94,13 @@ body {
 .map-country { fill: var(--paper-deep); stroke: var(--ink-sepia-soft); stroke-width: 0.5; }
 .map-sphere { fill: #EDE3CB; }
 
+.timeline-svg { display: block; width: auto; height: auto; }
+.timeline-axis-line { stroke: var(--ink-sepia-soft); stroke-width: 1; stroke-dasharray: 1 3; opacity: 0.5; }
+.timeline-axis-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: var(--ink-sepia-soft); }
+.timeline-band-bg { fill: transparent; }
+.timeline-band-bg--alt { fill: rgba(91, 58, 41, 0.035); }
+.timeline-band-label { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.85rem; fill: var(--ink-sepia); }
+
 .vignette-shape { fill: currentColor; stroke: var(--ink-sepia); stroke-width: 1; }
 .vignette--industriel { color: var(--cat-industriel); }
 .vignette--humain { color: var(--cat-humain); }

@@ -14,11 +14,12 @@ export function renderTree(container, { roots, crossLinks, index, filiations, on
   // espace qu'une sous-branche courte (ex. Weber, ~3 descendants). Chaque
   // racine reçoit exactement la largeur/hauteur dont elle a besoin ; le
   // canevas grandit en conséquence et défile (en plus du zoom/pan existant).
-  const NODE_GAP = 44;
+  const NODE_GAP = 56;
   const LEVEL_GAP = 190;
   const COLUMN_GAP = 80;
   const MARGIN = 60;
   const MARKER_SIZE = 24;
+  const MAX_LABEL_WIDTH = 150;
 
   let cursorX = MARGIN;
   let maxRequiredHeight = viewportHeight;
@@ -99,7 +100,7 @@ export function renderTree(container, { roots, crossLinks, index, filiations, on
     // Utiliser un seul des deux critères laissait l'autre cas se chevaucher.
     const siblingIndex = d.parent ? d.parent.children.indexOf(d) : 0;
     const labelBelow = (d.depth + siblingIndex) % 2 === 0;
-    const labelY = labelBelow ? 30 : -18;
+    const labelY = labelBelow ? 22 : -20;
 
     const label = nodeEl.append('text')
       .attr('x', 0)
@@ -108,7 +109,22 @@ export function renderTree(container, { roots, crossLinks, index, filiations, on
       .attr('class', 'tree-node-label')
       .text(ecole.nom);
 
-    const bbox = label.node().getBBox();
+    // Un libellé long (colonne parent/enfant, LEVEL_GAP=190) peut déborder
+    // sur la colonne voisine même quand l'alternance dessus/dessous protège
+    // correctement les frères : on le tronque avec une ellipse jusqu'à
+    // rester sous un budget de largeur sûr, plutôt que d'agrandir LEVEL_GAP
+    // pour tout le monde à cause de quelques noms plus longs.
+    let bbox = label.node().getBBox();
+    if (bbox.width > MAX_LABEL_WIDTH) {
+      let name = ecole.nom;
+      while (bbox.width > MAX_LABEL_WIDTH && name.length > 1) {
+        name = name.slice(0, -1);
+        label.text(name + '…');
+        bbox = label.node().getBBox();
+      }
+      label.append('title').text(ecole.nom);
+    }
+
     nodeEl.insert('rect', '.tree-node-label')
       .attr('class', 'tree-node-label-bg')
       .attr('x', bbox.x - 3)

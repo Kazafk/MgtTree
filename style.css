@@ -90,6 +90,7 @@ body {
 .tree-node { color: var(--ink-sepia); }
 .tree-node-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--ink-sepia); }
 .tree-node--dimmed { opacity: 0.25; }
+.tree-node-label-bg { fill: var(--paper); opacity: 0.88; }
 
 .map-country { fill: var(--paper-deep); stroke: var(--ink-sepia-soft); stroke-width: 0.5; }
 .map-sphere { fill: #EDE3CB; }

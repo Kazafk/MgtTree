@@ -14,10 +14,11 @@ export function renderTree(container, { roots, crossLinks, index, filiations, on
   // espace qu'une sous-branche courte (ex. Weber, ~3 descendants). Chaque
   // racine reçoit exactement la largeur/hauteur dont elle a besoin ; le
   // canevas grandit en conséquence et défile (en plus du zoom/pan existant).
-  const NODE_GAP = 34;
+  const NODE_GAP = 44;
   const LEVEL_GAP = 190;
   const COLUMN_GAP = 80;
   const MARGIN = 60;
+  const MARKER_SIZE = 24;
 
   let cursorX = MARGIN;
   let maxRequiredHeight = viewportHeight;
@@ -86,18 +87,33 @@ export function renderTree(container, { roots, crossLinks, index, filiations, on
       .style('cursor', 'pointer')
       .on('click', () => onSelect(ecole));
 
-    nodeEl.html(generateVignette(ecole.id, ecole.categorie, 40));
-    // Les chaînes à enfant unique (fréquentes ici) alignent plusieurs nœuds
-    // consécutifs sur la même position verticale : sans alternance, leurs
-    // libellés (souvent longs) se chevauchent en ligne droite quel que soit
-    // l'espacement horizontal. On alterne donc au-dessus/en-dessous selon la
-    // profondeur pour désenchevêtrer une chaîne, en plus de l'espacement fixe.
-    const labelBelow = d.depth % 2 === 0;
-    nodeEl.append('text')
+    nodeEl.append('g')
+      .attr('class', 'tree-node-marker')
+      .attr('transform', `translate(${-MARKER_SIZE / 2}, ${-MARKER_SIZE / 2})`)
+      .html(generateVignette(ecole.id, ecole.categorie, MARKER_SIZE));
+
+    // Alterner selon la profondeur ET la position parmi les frères : la
+    // profondeur seule désenchevêtre les chaînes à enfant unique (chaque
+    // niveau change de côté), la position parmi les frères désenchevêtre
+    // les fratries nombreuses au même niveau (chaque frère change de côté).
+    // Utiliser un seul des deux critères laissait l'autre cas se chevaucher.
+    const siblingIndex = d.parent ? d.parent.children.indexOf(d) : 0;
+    const labelBelow = (d.depth + siblingIndex) % 2 === 0;
+    const labelY = labelBelow ? 30 : -18;
+
+    const label = nodeEl.append('text')
       .attr('x', 0)
-      .attr('y', labelBelow ? 30 : -16)
+      .attr('y', labelY)
       .attr('text-anchor', 'middle')
       .attr('class', 'tree-node-label')
       .text(ecole.nom);
+
+    const bbox = label.node().getBBox();
+    nodeEl.insert('rect', '.tree-node-label')
+      .attr('class', 'tree-node-label-bg')
+      .attr('x', bbox.x - 3)
+      .attr('y', bbox.y - 1)
+      .attr('width', bbox.width + 6)
+      .attr('height', bbox.height + 2);
   }
 }

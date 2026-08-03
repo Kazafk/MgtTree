@@ -490,6 +490,40 @@
       "coords": { "lat": 46.2044, "lon": 6.1432 },
       "logique": "La pandémie de Covid-19 impose à grande échelle et en urgence le télétravail et les organisations distribuées, généralisant des pratiques déjà expérimentées par le mouvement DevOps et les entreprises « remote-first ». Cette bascule accélère l'adoption d'outils de collaboration asynchrone et rouvre le débat sur le lieu et le rythme de travail, entre modèles hybrides et entreprises entièrement distribuées.",
       "sources": ["OCDE (2021). Teleworking in the COVID-19 pandemic: Trends and prospects. OECD Policy Responses to Coronavirus.", "Organisation mondiale de la santé (OMS) — déclaration de pandémie de Covid-19, 11 mars 2020."]
+    },
+    {
+      "id": "rendanheyi",
+      "nom": "Rendanheyi (modèle Haier)",
+      "auteurs": ["Zhang Ruimin"],
+      "categorie": "organisationnel-emergent",
+      "region": "Chine",
+      "periode": { "debut": 2005, "fin": null },
+      "coords": { "lat": 36.0671, "lon": 120.3826 },
+      "logique": "Zhang Ruimin démantèle la structure pyramidale du groupe Haier au profit de milliers de micro-entreprises autonomes, chacune directement responsable devant un besoin client identifié : le terme « rendanheyi » (littéralement « l'unité de l'homme et de la valeur ») désigne cette fusion entre la personne (ren) et la valeur créée pour l'utilisateur (dan). Le modèle supprime les strates hiérarchiques intermédiaires en reliant chaque équipe directement à un marché plutôt qu'à une chaîne de commandement interne.",
+      "sources": ["Hamel, G., & Zanini, M. (2018). The End of Bureaucracy. Harvard Business Review, 96(6).", "Frynas, J. G., Mol, M. J., & Mellahi, K. (2018). Management Innovation Made in China: Haier's Rendanheyi. California Management Review, 61(1), 71-93."]
+    },
+    {
+      "id": "samsung-way",
+      "nom": "Samsung Way",
+      "auteurs": ["Lee Kun-hee"],
+      "categorie": "qualite",
+      "region": "Corée du Sud",
+      "periode": { "debut": 1993, "fin": null },
+      "coords": { "lat": 37.2636, "lon": 127.0286 },
+      "logique": "À partir de 1993, le président Lee Kun-hee lance la « New Management Initiative » pour transformer Samsung d'un fabricant à bas coût en leader mondial de l'innovation et du design, en greffant des pratiques de gestion occidentales sur un système industriel hérité du contrôle qualité japonais. Cette synthèse hybride articule exigence de qualité totale, investissement massif en R&D et culture de la vitesse d'exécution propre aux chaebols coréens.",
+      "citation_cle": "« Changez tout, sauf votre femme et vos enfants. » (Lee Kun-hee, 1993)",
+      "sources": ["Song, J., & Lee, K. (2014). The Samsung Way: Transformational Management Strategies from the World Leader in Innovation and Design. McGraw-Hill Education."]
+    },
+    {
+      "id": "jugaad-innovation",
+      "nom": "Jugaad Innovation",
+      "auteurs": ["Navi Radjou", "Jaideep Prabhu", "Simone Ahuja"],
+      "categorie": "agile",
+      "region": "Inde",
+      "periode": { "debut": 2012, "fin": null },
+      "coords": { "lat": 20.5937, "lon": 78.9629 },
+      "logique": "Radjou, Prabhu et Ahuja théorisent le « jugaad », terme hindi désignant l'art de contourner des contraintes sévères de ressources par une improvisation ingénieuse, comme un principe d'innovation frugale généralisable aux entreprises occidentales. Plutôt qu'un cycle d'innovation planifié et coûteux, cette approche valorise la flexibilité, l'expérimentation rapide sur le terrain et la simplicité de conception pour produire des solutions suffisamment bonnes à moindre coût.",
+      "sources": ["Radjou, N., Prabhu, J., & Ahuja, S. (2012). Jugaad Innovation: Think Frugal, Be Flexible, Generate Breakthrough Growth. Jossey-Bass.", "Radjou, N., & Prabhu, J. (2010). Jugaad: A New Growth Formula for Corporate America. Harvard Business Review."]
     }
   ],
   "filiations": [
@@ -531,6 +565,9 @@
     { "de": "holacratie", "vers": "organisations-teal", "type": "continuite" },
     { "de": "bureaucratie-weberienne", "vers": "keiretsu-japonais", "type": "rupture" },
     { "de": "fayolisme", "vers": "mittelstand-allemand", "type": "rupture" },
+    { "de": "bureaucratie-weberienne", "vers": "rendanheyi", "type": "rupture" },
+    { "de": "qualite-totale-tqm", "vers": "samsung-way", "type": "continuite" },
+    { "de": "lean-startup", "vers": "jugaad-innovation", "type": "rupture" },
     { "de": "organisations-teal", "vers": "capitalisme-parties-prenantes", "type": "continuite" },
     { "de": "devops", "vers": "travail-distribue-post-covid", "type": "continuite" },
     { "de": "controle-qualite-statistique", "vers": "toyotisme-lean", "type": "synthese" },
@@ -541,7 +578,8 @@
     { "de": "kaizen", "vers": "devops", "type": "synthese" },
     { "de": "okr-intel-google", "vers": "management-3-0", "type": "synthese" },
     { "de": "organisation-apprenante", "vers": "organisations-teal", "type": "synthese" },
-    { "de": "strategie-emergente-mintzberg", "vers": "capitalisme-parties-prenantes", "type": "synthese" }
+    { "de": "strategie-emergente-mintzberg", "vers": "capitalisme-parties-prenantes", "type": "synthese" },
+    { "de": "keiretsu-japonais", "vers": "samsung-way", "type": "synthese" }
   ],
   "evenements": [
     {

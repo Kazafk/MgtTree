@@ -3,6 +3,8 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 import { feature } from 'https://cdn.jsdelivr.net/npm/topojson-client@3/+esm';
 import { generateVignette } from './vignette.js';
 
+const MARKER_SIZE = 18;
+
 export async function renderMap(container, { ecoles, onSelect }) {
   container.innerHTML = '';
   const width = container.clientWidth || 1200;
@@ -39,6 +41,8 @@ export async function renderMap(container, { ecoles, onSelect }) {
       .attr('transform', `translate(${p[0]}, ${p[1]})`)
       .style('cursor', 'pointer')
       .on('click', () => onSelect(ecole));
-    marker.html(generateVignette(ecole.id, ecole.categorie, 20));
+    marker.append('g')
+      .attr('transform', `translate(${-MARKER_SIZE / 2}, ${-MARKER_SIZE / 2})`)
+      .html(generateVignette(ecole.id, ecole.categorie, MARKER_SIZE));
   }
 }

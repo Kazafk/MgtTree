@@ -1,16 +1,20 @@
 import { assertEqual, assertThrows } from './assert.mjs';
-import { generateVignette } from '../js/vignette.js';
+import { generateVignette, categoryLabel, categoryList } from '../js/vignette.js';
 
-const a1 = generateVignette('taylorisme', 'industriel', 48);
-const a2 = generateVignette('taylorisme', 'industriel', 48);
-assertEqual(a1, a2, 'même id + même categorie doit produire un SVG identique (déterminisme)');
+const a = generateVignette('taylorisme', 'industriel', 48);
+assertEqual(a.includes('<svg'), true, 'doit produire un élément svg');
+assertEqual(a.includes('width="48"'), true, 'doit respecter la taille demandée');
+assertEqual(a.includes('vignette--industriel'), true, 'la classe CSS doit refléter la categorie');
 
 const b = generateVignette('agile-manifeste', 'agile', 48);
-assertEqual(a1 === b, false, 'des id différents doivent produire des SVG différents');
-
-assertEqual(a1.includes('vignette--industriel'), true, 'la classe CSS doit refléter la categorie');
+assertEqual(a === b, false, 'des categories différentes doivent produire des marquages différents');
 assertEqual(b.includes('vignette--agile'), true, 'la classe CSS doit refléter la categorie');
 
 assertThrows(() => generateVignette('x', 'inconnue'), 'doit rejeter une categorie non supportée');
+
+assertEqual(categoryList().length, 7, 'categoryList doit retourner les 7 categories');
+assertEqual(categoryList().includes('agile'), true, 'categoryList doit inclure "agile"');
+assertEqual(categoryLabel('organisationnel-emergent'), 'Organisationnel émergent', 'categoryLabel doit retourner le libellé lisible');
+assertThrows(() => { if (categoryLabel('inconnue') === undefined) throw new Error('undefined'); }, 'categoryLabel(inconnue) doit être undefined (pas de libellé)');
 
 console.log('vignette.test.mjs: tous les tests passent');

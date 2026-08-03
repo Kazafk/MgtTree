@@ -6,6 +6,13 @@
   --moss: #3F5C3F;
   --moss-soft: #6E8F6E;
   --rupture: #8E3B1C;
+  --cat-industriel: #8C5A2B;
+  --cat-humain: #A13F4C;
+  --cat-systemique: #3E6E8E;
+  --cat-qualite: #6B7A2E;
+  --cat-strategique: #6B4E8E;
+  --cat-agile: #2E8E74;
+  --cat-organisationnel-emergent: #C08A2E;
 }
 
 * { box-sizing: border-box; }
@@ -87,6 +94,15 @@ body {
 .map-country { fill: var(--paper-deep); stroke: var(--ink-sepia-soft); stroke-width: 0.5; }
 .map-sphere { fill: #EDE3CB; }
 .map-marker { color: var(--moss); }
+
+.vignette-shape { fill: currentColor; stroke: var(--ink-sepia); stroke-width: 1; }
+.vignette--industriel { color: var(--cat-industriel); }
+.vignette--humain { color: var(--cat-humain); }
+.vignette--systemique { color: var(--cat-systemique); }
+.vignette--qualite { color: var(--cat-qualite); }
+.vignette--strategique { color: var(--cat-strategique); }
+.vignette--agile { color: var(--cat-agile); }
+.vignette--organisationnel-emergent { color: var(--cat-organisationnel-emergent); }
 
 .panel {
   position: fixed;

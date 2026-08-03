@@ -142,6 +142,39 @@ body {
   padding: 0;
 }
 
+.legend {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 5;
+  background: var(--paper-deep);
+  border: 1px solid var(--ink-sepia-soft);
+  border-radius: 3px;
+  padding: 0.75rem 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--ink-sepia);
+  max-width: min(260px, 80vw);
+  max-height: 45vh;
+  overflow-y: auto;
+}
+.legend h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.85rem;
+  margin: 0 0 0.4rem;
+}
+.legend-section + .legend-section { margin-top: 0.6rem; }
+.legend-item { display: flex; align-items: center; gap: 0.4rem; margin: 0.2rem 0; }
+.legend-swatch { flex: none; width: 12px; height: 12px; background: currentColor; border-radius: 2px; }
+.legend-line { flex: none; width: 20px; height: 0; border-top-width: 2px; }
+.legend-line--continuite { border-top-style: solid; border-top-color: var(--ink-sepia-soft); }
+.legend-line--rupture { border-top-style: dashed; border-top-color: var(--rupture); }
+.legend-line--synthese { border-top-style: dotted; border-top-color: var(--moss-soft); }
+
+@media (max-width: 480px) {
+  .legend { font-size: 0.65rem; padding: 0.5rem 0.75rem; max-width: 70vw; max-height: 35vh; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .panel { transition: none; }
 }

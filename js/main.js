@@ -3,6 +3,7 @@ import { validateData, buildIndex, buildStructuralTree } from './data.js';
 import { renderTree } from './tree.js';
 import { renderMap } from './map.js';
 import { renderPanel } from './panel.js';
+import { renderLegend } from './legend.js';
 
 async function init() {
   const raw = await fetch('./data.json').then(r => r.json());
@@ -15,6 +16,8 @@ async function init() {
   const panelContainer = document.getElementById('detail-panel');
   const tabTree = document.getElementById('tab-tree');
   const tabMap = document.getElementById('tab-map');
+
+  renderLegend(document.getElementById('legend'));
 
   const state = { view: 'tree' };
 

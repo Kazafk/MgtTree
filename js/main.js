@@ -4,6 +4,7 @@ import { renderTree } from './tree.js';
 import { renderMap } from './map.js';
 import { renderPanel } from './panel.js';
 import { renderLegend } from './legend.js';
+import { categoryLabel } from './vignette.js';
 
 async function init() {
   const raw = await fetch('./data.json').then(r => r.json());
@@ -30,7 +31,7 @@ async function init() {
   for (const c of categories) {
     const opt = document.createElement('option');
     opt.value = c;
-    opt.textContent = c;
+    opt.textContent = categoryLabel(c);
     filterCategorie.appendChild(opt);
   }
   for (const r of regions) {

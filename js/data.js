@@ -1,4 +1,6 @@
-const CATEGORIES = new Set(['industriel', 'humain', 'systemique', 'qualite', 'strategique', 'agile', 'organisationnel-emergent']);
+import { categoryList } from './vignette.js';
+
+const CATEGORIES = new Set(categoryList());
 const FILIATION_TYPES = new Set(['continuite', 'rupture', 'synthese']);
 
 export function validateData(raw) {

@@ -14,12 +14,20 @@ export function renderTree(container, { roots, crossLinks, index, filiations, on
   // espace qu'une sous-branche courte (ex. Weber, ~3 descendants). Chaque
   // racine reçoit exactement la largeur/hauteur dont elle a besoin ; le
   // canevas grandit en conséquence et défile (en plus du zoom/pan existant).
+  // Clearance verticale entre labels de deux frères adjacents (l'un "dessous",
+  // l'autre "dessus") : NODE_GAP - offset_dessous - |offset_dessus| - H, où H
+  // est la hauteur de la bbox du texte (~13.2px pour la police 10px JetBrains
+  // Mono de .tree-node-label — ascendantes/descendantes comprises, pas juste
+  // le font-size). Avec les valeurs ci-dessous : 56 - 22 - 16 - 13.2 ≈ 4.8px de
+  // marge. Toute modification de NODE_GAP, du font-size ou des offsets du
+  // label doit représerver une marge positive pour ne pas réintroduire le
+  // chevauchement.
   const NODE_GAP = 56;
   const LEVEL_GAP = 190;
   const COLUMN_GAP = 80;
   const MARGIN = 60;
   const MARKER_SIZE = 24;
-  const MAX_LABEL_WIDTH = 150;
+  const MAX_LABEL_WIDTH = 180;
 
   let cursorX = MARGIN;
   let maxRequiredHeight = viewportHeight;
@@ -91,7 +99,7 @@ export function renderTree(container, { roots, crossLinks, index, filiations, on
     nodeEl.append('g')
       .attr('class', 'tree-node-marker')
       .attr('transform', `translate(${-MARKER_SIZE / 2}, ${-MARKER_SIZE / 2})`)
-      .html(generateVignette(ecole.id, ecole.categorie, MARKER_SIZE));
+      .html(generateVignette(ecole.categorie, MARKER_SIZE));
 
     // Alterner selon la profondeur ET la position parmi les frères : la
     // profondeur seule désenchevêtre les chaînes à enfant unique (chaque
@@ -100,7 +108,7 @@ export function renderTree(container, { roots, crossLinks, index, filiations, on
     // Utiliser un seul des deux critères laissait l'autre cas se chevaucher.
     const siblingIndex = d.parent ? d.parent.children.indexOf(d) : 0;
     const labelBelow = (d.depth + siblingIndex) % 2 === 0;
-    const labelY = labelBelow ? 22 : -20;
+    const labelY = labelBelow ? 22 : -16;
 
     const label = nodeEl.append('text')
       .attr('x', 0)
@@ -114,9 +122,19 @@ export function renderTree(container, { roots, crossLinks, index, filiations, on
     // correctement les frères : on le tronque avec une ellipse jusqu'à
     // rester sous un budget de largeur sûr, plutôt que d'agrandir LEVEL_GAP
     // pour tout le monde à cause de quelques noms plus longs.
+    // getBBox() suppose que le SVG est attaché à un conteneur visible (non
+    // "hidden") ; js/main.js garantit cela en démasquant toujours le
+    // conteneur avant d'appeler renderTree.
     let bbox = label.node().getBBox();
     if (bbox.width > MAX_LABEL_WIDTH) {
       let name = ecole.nom;
+      // Estimation proportionnelle de la longueur cible avant d'affiner
+      // caractère par caractère, pour éviter jusqu'à 20+ reflows getBBox()
+      // par libellé long (un par caractère retiré depuis la longueur totale).
+      const estimate = Math.max(1, Math.floor(name.length * (MAX_LABEL_WIDTH / bbox.width)) - 1);
+      name = name.slice(0, estimate);
+      label.text(name + '…');
+      bbox = label.node().getBBox();
       while (bbox.width > MAX_LABEL_WIDTH && name.length > 1) {
         name = name.slice(0, -1);
         label.text(name + '…');

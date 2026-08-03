@@ -43,6 +43,6 @@ export async function renderMap(container, { ecoles, onSelect }) {
       .on('click', () => onSelect(ecole));
     marker.append('g')
       .attr('transform', `translate(${-MARKER_SIZE / 2}, ${-MARKER_SIZE / 2})`)
-      .html(generateVignette(ecole.id, ecole.categorie, MARKER_SIZE));
+      .html(generateVignette(ecole.categorie, MARKER_SIZE));
   }
 }

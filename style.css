@@ -87,14 +87,12 @@ body {
 .tree-link[data-type="rupture"] { stroke: var(--rupture); stroke-dasharray: 4 3; }
 .cross-link { fill: none; stroke: var(--moss-soft); stroke-width: 1; stroke-dasharray: 2 3; }
 
-.tree-node { color: var(--ink-sepia); }
 .tree-node-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--ink-sepia); }
 .tree-node--dimmed { opacity: 0.25; }
 .tree-node-label-bg { fill: var(--paper); opacity: 0.88; }
 
 .map-country { fill: var(--paper-deep); stroke: var(--ink-sepia-soft); stroke-width: 0.5; }
 .map-sphere { fill: #EDE3CB; }
-.map-marker { color: var(--moss); }
 
 .vignette-shape { fill: currentColor; stroke: var(--ink-sepia); stroke-width: 1; }
 .vignette--industriel { color: var(--cat-industriel); }
@@ -117,6 +115,7 @@ body {
   transform: translateX(100%);
   transition: transform 0.3s ease;
   overflow-y: auto;
+  z-index: 10;
 }
 
 .panel--open { transform: translateX(0); }
@@ -165,7 +164,7 @@ body {
 }
 .legend-section + .legend-section { margin-top: 0.6rem; }
 .legend-item { display: flex; align-items: center; gap: 0.4rem; margin: 0.2rem 0; }
-.legend-swatch { flex: none; width: 12px; height: 12px; background: currentColor; border-radius: 2px; }
+.legend-swatch { flex: none; width: 12px; height: 12px; background: currentColor; border: 1px solid var(--ink-sepia); border-radius: 2px; }
 .legend-line { flex: none; width: 20px; height: 0; border-top-width: 2px; }
 .legend-line--continuite { border-top-style: solid; border-top-color: var(--ink-sepia-soft); }
 .legend-line--rupture { border-top-style: dashed; border-top-color: var(--rupture); }
